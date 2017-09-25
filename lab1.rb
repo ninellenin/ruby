@@ -1,11 +1,10 @@
 def getStrings(letters, n)
-    (0..n-2).reduce(letters){|result, position| 
-        (0..result.count - 1).map{|i| 
-            [result[i], letters.select{|l| l != result[i][position]} ]}
-                    .map{|start, tails|
-                        tails.map{|letter| start + letter}
-    }.reduce([]){|flat, element| flat + element}
-}
+    (0..n-2).reduce(letters) {|result, position| 
+        (0..result.count - 1).map {|i| 
+            letters.select {|l| l != result[i][position]}
+                .map{ |tail| result[i] + tail}
+        }.reduce([]){|flat, element| flat + element}
+    }
 end
 
 def checkString(string)
