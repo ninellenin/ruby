@@ -22,8 +22,10 @@ class DpkgParser
         # <status <state> <package> <installed_version>
         elsif (match_data = tail.match(/status #{@@state} #{@@package_name} #{@@version}$/))
             record = DpkgStatusRecord.new(time, *match_data[1, 3])
+        # <conffile <file> <decision>
         elsif (match_data = tail.match(/conffile #{@@file_name} #{@@decision}$/))
             record = DpkgConffileChangesRecord.new(time, *match_data[1, 2])
+        # <startup <action>
         elsif (match_data = tail.match(/startup #{@@startup_action}$/))
             record = DpkgStartupRecord.new(time, match_data[1])
         else
