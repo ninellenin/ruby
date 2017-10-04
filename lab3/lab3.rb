@@ -1,6 +1,6 @@
 require 'set'
 
-class DpkgLogger
+class DpkgParser
         @@date = '(\d{4})-([0|1]\d)-([0-3]\d)'
         @@time = '([0-2]\d):([0-5]\d):([0-5]\d)'
         @@action = '(install|upgrade|remove|purge|configure|trigproc)'
@@ -112,7 +112,7 @@ end
 
 class DpkgStatistics
     def initialize
-        @logger = DpkgLogger.new
+        @parser = DpkgParser.new
         @records = []
         @installed_packages = Set.new
         @upgraded_packages = Set.new
@@ -121,7 +121,7 @@ class DpkgStatistics
         @startups = Hash.new
     end
     def add_line(line)
-        if (record = @logger.parse_line(line))
+        if (record = @parser.parse_line(line))
             @records.push(record)
             if (record.instance_of? DpkgActionRecord)
                 case (record.action)
